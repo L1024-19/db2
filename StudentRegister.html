@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Student Register Page</title>
+</head>
+<body>
+    <h2>
+        Student Register Page
+    </h2>
+    <form action="StudentRegister.php" method="post">
+        <table>
+            <tr>
+                <td>
+                    Email:
+                </td>
+                <td>
+                    <input type="text" name="email"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password:
+                </td>
+                <td>
+                    <input type="text" name="password"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Student Name:
+                </td>
+                <td>
+                    <input type="text" name="studentname"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Phone:
+                </td>
+                <td>
+                    <input type="text" name="phone"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Parent Email:
+                </td>
+                <td>
+                    <input type="text" name="parentemail"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Grade:
+                </td>
+                <td>
+                    <select name="grade">
+                        <option value="6" selected>6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>        
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Role:
+                </td>
+                <td>
+                    <select name="role">
+                        <option value="no" selected>No</option>
+                        <option value="mentor">Mentor</option>
+                        <option value="mentee">Mentee</option>
+                        <option value="both">Both</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Submit"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+
