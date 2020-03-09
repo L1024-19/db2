@@ -5,7 +5,7 @@
 
     // input variables
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $name = $_POST['studentname'];
     $phone = $_POST['phone'];
     $parentemail = $_POST['parentemail'];
