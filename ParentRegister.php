@@ -43,9 +43,8 @@
 
     mysqli_free_result($parentidresult);
 
-    header('Location: ParentSignIn.html');
-
     // close connection
     mysqli_close($myconnection);
 
+    header('Location: ParentSignIn.html');
 ?>

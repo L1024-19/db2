@@ -14,5 +14,6 @@ if (isset($_SESSION['user_id'])) {
 ?>
 
 <div>
+    <a href='UpdateParentInfo.php'>Update Parent Info</a>
     <a href='Logout.php'>Logout</a>
 <div>
