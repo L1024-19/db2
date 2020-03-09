@@ -16,13 +16,13 @@
     $insertstmt->bind_param("ssss", $email, $password, $name, $phone);
 
     if (empty($_POST['email']) || empty($_POST['password']) || empty($_POST['name'])) {
-        echo 'Email, Password, and Name cannot be empty.<br>';
+        echo("Email, Password, and Name cannot be empty.<br>");
     }
     else if ($insertstmt->execute() === TRUE) {
-        echo 'Inserted<br>';
+        echo("Inserted<br>");
     }
     else {
-        echo 'Not inserted<br>';
+        echo("Not inserted<br>");
     }
 
     $parentidselect = "SELECT id FROM users WHERE email = '$email'";
@@ -34,17 +34,16 @@
     $insertintoparents = "INSERT INTO parents (parent_id) VALUES ($parentid)";
 
     if (mysqli_query($myconnection, $insertintoparents)) {
-        echo "Inserted into parents successfully<br>";
+        echo("Inserted into parents successfully<br>");
     }
     else {
         // echo("Error description: " . mysqli_error($myconnection));
         echo("Inserting into parents unsuccessful<br>");
-    }
-
-    // if(password_verify($EnteredPassword, $HashedPasswordInDatabase)) {
-    // } 
+    } 
 
     mysqli_free_result($parentidresult);
+
+    header('Location: ParentSignIn.html');
 
     // close connection
     mysqli_close($myconnection);

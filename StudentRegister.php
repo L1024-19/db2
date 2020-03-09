@@ -93,9 +93,6 @@
         echo 'Parent Email cannot be empty.<br>';
     }
 
-    // if(password_verify($EnteredPassword, $HashedPasswordInDatabase)) {
-    // } 
-
     // free the object
     if ($emailresult != NULL) {
         mysqli_free_result($emailresult);
