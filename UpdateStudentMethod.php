@@ -84,7 +84,8 @@ if (isset($_SESSION['user_id'])) {
     mysqli_close($myconnection);
     header('Location: ParentDashboard.php');
     // Let them access the "logged in only" pages
-} else {
+}
+else {
     // Redirect them to the login page
     header("Location: Homepage.html");
 }
