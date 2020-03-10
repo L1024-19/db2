@@ -82,7 +82,7 @@ if (isset($_SESSION['user_id'])) {
     }
     // close connection
     mysqli_close($myconnection);
-    // header('Location: ParentDashboard.php');
+    header('Location: ParentDashboard.php');
     // Let them access the "logged in only" pages
 } else {
     // Redirect them to the login page
