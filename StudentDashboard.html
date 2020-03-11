@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Student Dashboard</title>
+
+  <style>
+    table {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+
+<body>
+  <p><a href="StudentDashboard.html">Student Dashboard </a>
+    &emsp;
+    <a href="Logout.php">Logout</a>
+  </p>
+
+
+  <h1>Student Information</h1>
+
+  <table style="width:100%">
+    <tr>
+      <th colspan="2">User Type</th>
+      <th>Action</th>
+    </tr>
+
+    <tr>
+      <td>User</td>
+      <td>Profile</td>
+      <td><a href="StudentProfile.html">Change Your Profile</td>
+    </tr>
+    <tr>
+      <td>Student</td>
+      <td>Section</td>
+      <td><a href="StudentSection.html">View Sections</td>
+    </tr>
+    <tr>
+      <td>Mentor</td>
+      <td>Mentor</td>
+      <td><a href="MentorList.html">View Mentor</td>
+    </tr>
+    <tr>
+      <td>Mentee</td>
+      <td>Mentee</td>
+      <td><a href="MenteeList.html">View Mentee</td>
+    </tr>
+  </table>
+  <br>
+
+  <h2 style="color:#FF0000" ;>Mentor Notification For Next Week</h2>
+  <form action="MentorNotification.php" method="post">
+    <table style="width:100%">
+      <tr>
+        <th>Role</th>
+        <th>Course Name</th>
+        <th>Section Name</th>
+        <th>Session Name</th>
+        <th>Session Date</th>
+      </tr>
+      <tr>
+        <td id="MentorRole">
+          <!--MentorRrole = "Mentor"-->
+        </td>
+        <td id="MentorCName">
+          <!--MentorCName = "Database II"-->
+        </td>
+        <td id="MentorStName">
+          <!--MentorStName = "201"-->
+        </td>
+        <td id="MentorSsName">
+          <!--MentorSsName = "201-5"-->
+        </td>
+        <td id="MentorSDate">
+          <!--MentorSDate = "2020-01-21 ~ 2020-05-09"-->
+        </td>
+      </tr>
+    </table>
+  </form>
+  <br>
+
+  <h2 style="color:#FF0000" ;>Mentee Notification For Next Week</h2>
+  <form action="MenteeNotification.php" method="post">
+    <table style="width:100%">
+      <tr>
+        <th>Role</th>
+        <th>Course Name</th>
+        <th>Section Name</th>
+        <th>Session Name</th>
+        <th>Session Date</th>
+      </tr>
+      <tr>
+        <td id="MenteeRole"></td>
+        <td id="MenteeCName"></td>
+        <td id="MenteeStName"></td>
+        <td id="MenteeSsName"></td>
+        <td id="MenteeSDate"></td>
+      </tr>
+    </table>
+  </form>
+
+</body>
+
+</html>
