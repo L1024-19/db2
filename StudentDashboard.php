@@ -15,5 +15,6 @@ if (isset($_SESSION['user_id'])) {
 
 <div>
     <a href='StudentUpdateStudentInfo.php'>Update Student Info</a><br>
+    <a href='MenteeList.php'>Mentee Section</a><br>
     <a href='Logout.php'>Logout</a>
 <div>
