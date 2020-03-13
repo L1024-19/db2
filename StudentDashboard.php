@@ -68,7 +68,7 @@ if (isset($_SESSION['user_id'])) {
       <tr>
         <td>Mentor</td>
         <td>Mentor</td>
-        <td><a href="MentorList.html">View Mentor</td>
+        <td><a href="MentorList.php">View Mentor</td>
       </tr>
       <tr>
         <td>Mentee</td>
