@@ -13,14 +13,6 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 
-<<<<<<< HEAD
-<div>
-    <a href='StudentUpdateStudentInfo.php'>Update Student Info</a><br>
-    <a href='AllSections.php'>All Sections</a><br>
-    <a href='MenteeList.php'>Mentee Section</a><br>
-    <a href='Logout.php'>Logout</a>
-<div>
-=======
 
   <!DOCTYPE html>
   <html lang="en" dir="ltr">
@@ -71,7 +63,7 @@ if (isset($_SESSION['user_id'])) {
       <tr>
         <td>Student</td>
         <td>Section</td>
-        <td><a href="StudentSection.html">View Sections</td>
+        <td><a href="StudentSection.php">View Sections</td>
       </tr>
       <tr>
         <td>Mentor</td>
@@ -112,7 +104,7 @@ if (isset($_SESSION['user_id'])) {
           <td name="MentorSsName">
             <!--MentorSsName = "201-5"-->
           </td>
-          <td ="MentorSDate">
+          <td name="MentorSDate">
             <!--MentorSDate = "2020-01-21 ~ 2020-05-09"-->
           </td>
           <td name="MentorCount">
@@ -163,4 +155,3 @@ if (isset($_SESSION['user_id'])) {
   </body>
 
   </html>
->>>>>>> 141cbe5420d0060336ff1d9ba88c04a14a0e5d1c
