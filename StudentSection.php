@@ -92,7 +92,22 @@ else {
         $enrolledmenteeidquery = "SELECT mentee_id from enroll WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
         $enrolledmenteeidresult = mysqli_query($myconnection, $enrolledmenteeidquery)
         or die ('Query failed: ' . mysqli_error($myconnection));
-        $enrolledmenteeid = mysqli_fetch_array($enrolledmenteeidresult, MYSQLI_ASSOC);
+        $menteearray = array();
+        while ($row = mysqli_fetch_array($enrolledmenteeidresult, MYSQLI_ASSOC)) {
+            $menteearray[] =  $row['mentee_id'];
+        }
+        
+        //var_dump($menteearray);
+        //echo "<br>";
+
+        // enrolled mentor id query
+        $enrolledmentoridquery = "SELECT mentor_id from enroll2 WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+        $enrolledmentoridresult = mysqli_query($myconnection, $enrolledmentoridquery)
+        or die ('Query failed: ' . mysqli_error($myconnection));
+        $mentorarray = array();
+        while ($row = mysqli_fetch_array($enrolledmentoridresult, MYSQLI_ASSOC)) {
+            $mentorarray[] =  $row['mentor_id'];
+        }
         echo("<tr>");
         echo("<td>".$meetinginfowithtime['meet_name']."</td>");
         echo("<td>"."?"."</td>");
@@ -104,20 +119,21 @@ else {
         echo("<td>".(9 - $enrolledmentee['count'] - $enrolledmentor['count'])."</td>");
         echo("<td>".$enrolledmentee['count']."</td>");
         echo("<td>".$enrolledmentor['count']."</td>");
-        if ($enrolledmentee['count'] < 6 && !(array_key_exists($_SESSION['user_id'], $enrolledmenteeid))) {
-            echo("<td>"."<a href=''>Enroll</a>"."</td>");
+        if ($enrolledmentee['count'] < 6 && !(in_array($_SESSION['user_id'], $menteearray)) && !(in_array($_SESSION['user_id'], $mentorarray))) {
+            echo("<td>"."<a href='Enroll.php?key=".$meetinginfowithtime['meet_id']."'>Enroll</a>"."</td>");
         }
         else {
             echo("<td>"."N/A"."</td>");
         }
-        if ($enrolledmentor['count'] < 3) {
-            echo("<td>"."<a href=''>Teach</a>"."</td>");
+        if ($enrolledmentor['count'] < 3 && !(in_array($_SESSION['user_id'], $mentorarray)) && !(in_array($_SESSION['user_id'], $menteearray))) {
+            echo("<td>"."<a href='Teach.php?key=".$meetinginfowithtime['meet_id']."'>Teach</a>"."</td>");
         }
         else {
-
+            echo("<td>"."N/A"."</td>");
         }
         echo("</tr>");
     }
+
     ?>
     <tr>
       <td>Database II</td>

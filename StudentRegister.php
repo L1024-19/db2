@@ -114,4 +114,5 @@
     // close connection
     mysqli_close($myconnection);
 
+    header('Location: StudentSignIn.html');
 ?>
