@@ -88,6 +88,11 @@ else {
         $enrolledmentorresult = mysqli_query($myconnection, $enrolledmentorquery)
         or die ('Query failed: ' . mysqli_error($myconnection));
         $enrolledmentor = mysqli_fetch_array($enrolledmentorresult, MYSQLI_ASSOC);
+        // enrolled mentee id query
+        $enrolledmenteeidquery = "SELECT mentee_id from enroll WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+        $enrolledmenteeidresult = mysqli_query($myconnection, $enrolledmenteeidquery)
+        or die ('Query failed: ' . mysqli_error($myconnection));
+        $enrolledmenteeid = mysqli_fetch_array($enrolledmenteeidresult, MYSQLI_ASSOC);
         echo("<tr>");
         echo("<td>".$meetinginfowithtime['meet_name']."</td>");
         echo("<td>"."?"."</td>");
@@ -99,11 +104,11 @@ else {
         echo("<td>".(9 - $enrolledmentee['count'] - $enrolledmentor['count'])."</td>");
         echo("<td>".$enrolledmentee['count']."</td>");
         echo("<td>".$enrolledmentor['count']."</td>");
-        if ($enrolledmentee['count'] < 6) {
+        if ($enrolledmentee['count'] < 6 && !(array_key_exists($_SESSION['user_id'], $enrolledmenteeid))) {
             echo("<td>"."<a href=''>Enroll</a>"."</td>");
         }
         else {
-
+            echo("<td>"."N/A"."</td>");
         }
         if ($enrolledmentor['count'] < 3) {
             echo("<td>"."<a href=''>Teach</a>"."</td>");
