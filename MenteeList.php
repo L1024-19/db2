@@ -144,35 +144,6 @@ else {
       <td><input type="button" value="Enroll"></td>
     </tr>
 
-    <tr>
-      <td>Machine Learning</td>
-      <td>422</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>W 15:30 PM - 16:45 PM</td>
-      <td>49</td>
-      <td>8</td>
-      <td>7</td>
-      <td>2</td>
-      <td>2</td>
-      <td><input type="button" value="Teach"></td>
-      <td><input type="button" value="Enroll"></td>
-    </tr>
-
-    <tr>
-      <td>Computer Graphics I</td>
-      <td>427</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>W 18:30 PM - 21:20 PM</td>
-      <td>35</td>
-      <td>8</td>
-      <td>7</td>
-      <td>2</td>
-      <td>2</td>
-      <td><input type="button" value="Teach"></td>
-      <td><input type="button" value="Enroll"></td>
-    </tr>
 
   </table>
 
