@@ -7,7 +7,7 @@ session_start();
 if (isset($_SESSION['user_id'])) {
     // Grab user data from the database using the user_id
     // sql connection
-    $myconnection = mysqli_connect('localhost', 'root', '', 'db2') 
+    $myconnection = mysqli_connect('localhost', 'root', '', 'db2')
     or die ('Could not connect: ' . mysqli_error($myconnection));
 
     // variables
@@ -19,7 +19,7 @@ if (isset($_SESSION['user_id'])) {
     $newphone = $_POST['newphone'];
     $newgrade = $_POST['newgrade'];
     $newrole = $_POST['newrole'];
-  
+
     $studentquery = "SELECT * from users WHERE id = '{$_SESSION['user_id']}'";
     $studentresult = mysqli_query($myconnection, $studentquery)
     or die ('Query failed: ' . mysqli_error($myconnection));
