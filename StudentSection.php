@@ -97,8 +97,8 @@ else {
             $menteearray[] =  $row['mentee_id'];
         }
         
-        //var_dump($menteearray);
-        //echo "<br>";
+        // var_dump($menteearray);
+        // echo "<br>";
 
         // enrolled mentor id query
         $enrolledmentoridquery = "SELECT mentor_id from enroll2 WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
