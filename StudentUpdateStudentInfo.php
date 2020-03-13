@@ -13,6 +13,21 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Change Student Profile</title>
+</head>
+
+<body>
+<a href="StudentSetting.html">Student Setting</a>
+
+<h2>
+  Change Student Profile
+</h2>
+
 <form action="StudentUpdateStudentMethod.php" method="post">
     <table>
         <tr>
@@ -76,7 +91,7 @@ if (isset($_SESSION['user_id'])) {
                     <option value="10">10</option>
                     <option value="11">11</option>
                     <option value="12">12</option>
-                </select>        
+                </select>
             </td>
         </tr>
         <tr>
@@ -99,3 +114,5 @@ if (isset($_SESSION['user_id'])) {
         </tr>
     </table>
 </form>
+</body>
+</html>

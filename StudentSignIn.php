@@ -16,7 +16,7 @@ if (!empty($_POST)) {
     	// Verify user password and set $_SESSION
     	if (password_verify($_POST['studentpassword'], $user->password)) {
             $_SESSION['user_id'] = $user->id;
-            header('Location: StudentDashboard.php');
+            header('Location: StudentSetting.html');
         }
         else {
             echo("Something went wrong");
