@@ -59,6 +59,7 @@ else {
       <th>Enrolled Mentee</th>
       <th>Teach as Mentor</th>
       <th>Enroll as Mentee</th>
+      <th>Materials</th>
     </tr>
     <?php
     $myconnection = mysqli_connect('localhost', 'root', '', 'db2')
@@ -84,6 +85,7 @@ else {
         echo("<td>"."?"."</td>");
         echo("<td>"."?"."</td>");
         echo("<td>"."?"."</td>");
+        echo("<td>"."<a href='Materials.php?key=".$meetinginfowithtime['meet_id']."'>View</a>"."</td>");
         echo("</tr>");
     }
     ?>
