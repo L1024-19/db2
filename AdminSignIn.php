@@ -10,7 +10,7 @@ if (!empty($_POST)) {
     else if (isset($_POST['adminemail']) && isset($_POST['adminpassword'])) {
         // Getting submitted user data from database
         $myconnection = new mysqli('localhost', 'root', '', 'db2');
-        $stmt = $myconnection->prepare("SELECT email, password FROM admins, users WHERE email = ? ".
+        $stmt = $myconnection->prepare("SELECT id, email, password FROM admins, users WHERE email = ? ".
         "AND admins.admin_id = users.id");
         $stmt->bind_param('s', $_POST['adminemail']);
         $stmt->execute();

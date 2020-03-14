@@ -10,7 +10,7 @@ if (!empty($_POST)) {
     else if (isset($_POST['parentemail']) && isset($_POST['parentpassword'])) {
         // Getting submitted user data from database
         $myconnection = new mysqli('localhost', 'root', '', 'db2');
-        $stmt = $myconnection->prepare("SELECT email, password FROM parents, users WHERE email = ? ".
+        $stmt = $myconnection->prepare("SELECT id, email, password FROM parents, users WHERE email = ? ".
         "AND parents.parent_id = users.id");
         $stmt->bind_param('s', $_POST['parentemail']);
         $stmt->execute();
