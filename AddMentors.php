@@ -40,10 +40,7 @@ else {
         $insertstmt = $myconnection->prepare($insert);
         $insertstmt->bind_param("ii", $meetid, $mentorid);
 
-        if (empty($meetid) || empty($mentorid)) {
-            echo("Meet ID and Mentor ID cannot be empty.<br>");
-        }
-        else if ($insertstmt->execute() === TRUE) {
+        if ($insertstmt->execute() === TRUE) {
             echo("Inserted<br>");
         }
         else {
