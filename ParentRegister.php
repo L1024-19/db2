@@ -24,7 +24,7 @@
         $insertstmt = $myconnection->prepare($insert);
         $insertstmt->bind_param("ssss", $email, $password, $name, $phone);
 
-        if (empty($_POST['email']) || empty($_POST['password']) || empty($_POST['name'])) {
+        if (empty($email) || empty($password) || empty($name)) {
             echo("Email, Password, and Name cannot be empty.<br>");
         }
         else if ($insertstmt->execute() === TRUE) {
