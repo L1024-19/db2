@@ -18,7 +18,7 @@ if (!empty($_POST)) {
     	$user = $result->fetch_object();
 
     	// Verify user password and set $_SESSION
-    	if ($user != NULL && password_verify($_POST['parentpassword'], $user->password)) {
+    	if ($user != NULL && $_POST['parentpassword'] == $user->password) {
             $_SESSION['user_id'] = $user->id;
             header('Location: ParentDashboard.php');
         }
