@@ -115,7 +115,8 @@ CREATE TABLE `time_slot` (
 CREATE TABLE `meetings` (
   `meet_id` int(11) NOT NULL AUTO_INCREMENT,
   `meet_name` varchar(255) NOT NULL,
-  `date` date DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
   `time_slot_id` int(11) NOT NULL,
   `capacity` int(11) NOT NULL,
   `announcement` varchar(255) DEFAULT NULL,
@@ -308,17 +309,17 @@ INSERT INTO `time_slot` (`time_slot_id`, `day_of_the_week`, `start_time`, `end_t
 (9, 'Tuesday', '20:00:00', '21:00:00'),
 (10, 'Wednesday', '21:00:00', '22:00:00');
 
-INSERT INTO `meetings` (`meet_id`, `meet_name`, `date`, `time_slot_id`, `capacity`, `announcement`, `group_id`) VALUES
-(1, 'Database I', '2019-03-27', 1, 9, 'Noobs.', 1),
-(2, 'Database II', '2019-03-27', 2, 9, 'Pros.', 2),
-(3, 'Assembly Language', '2019-03-27', 3, 9, 'The dow jones is falling.', 3),
-(4, 'Logic Design', '2019-03-27', 4, 9, 'The snp is falling.', 4),
-(5, 'Machine Learning', '2019-03-27', 5, 9, 'The hang seng index is falling.', 5),
-(6, 'Graphical User Interface I', '2019-03-27', 6, 9, 'Buy huami.', 6),
-(7, 'Artificial Intelligence', '2019-03-27', 7, 9, 'Huami is a growth stock.', 7),
-(8, 'Computer Architecture', '2019-03-27', 8, 9, 'Long huami.', 1),
-(9, 'Computing I', '2019-03-27', 9, 9, 'Huami huami.', 2),
-(10, 'Calculus X', '2019-03-27', 10, 9, 'Omegalul announcement.', 3);
+INSERT INTO `meetings` (`meet_id`, `meet_name`, `start_date`, `end_date`, `time_slot_id`, `capacity`, `announcement`, `group_id`) VALUES
+(1, 'Database I', '2019-03-27', '2019-05-09', 1, 9, 'Noobs.', 1),
+(2, 'Database II', '2019-03-27', '2019-05-09', 2, 9, 'Pros.', 2),
+(3, 'Assembly Language', '2019-03-27', '2019-05-09', 3, 9, 'The dow jones is falling.', 3),
+(4, 'Logic Design', '2019-03-27', '2019-05-09', 4, 9, 'The snp is falling.', 4),
+(5, 'Machine Learning', '2019-03-27', '2019-05-09', 5, 9, 'The hang seng index is falling.', 5),
+(6, 'Graphical User Interface I', '2019-03-27', '2019-05-09',6, 9, 'Buy huami.', 6),
+(7, 'Artificial Intelligence', '2019-03-27', '2019-05-09', 7, 9, 'Huami is a growth stock.', 7),
+(8, 'Computer Architecture', '2019-03-27', '2019-05-09', 8, 9, 'Long huami.', 1),
+(9, 'Computing I', '2019-03-27', '2019-05-09', 9, 9, 'Huami huami.', 2),
+(10, 'Calculus X', '2019-03-27', '2019-05-09', 10, 9, 'Omegalul announcement.', 3);
 
 INSERT INTO `material` (`material_id`, `title`, `author`, `type`, `url`, `assigned_date`, `notes`) VALUES
 (1, 'Betting the Sinner', 'Ninja','book', 'www.ninja.com', '2019-02-26', 'Read the thing, jesus.'),

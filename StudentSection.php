@@ -59,25 +59,25 @@ else {
       <th>Teach as Mentor</th>
     </tr>
     <?php
-    $myconnection = mysqli_connect('localhost', 'root', '', 'db2') 
+    $myconnection = mysqli_connect('localhost', 'root', '', 'db2')
     or die ('Could not connect: ' . mysqli_error($myconnection));
     $meetingsquery = "SELECT meet_id from enroll WHERE mentee_id = '{$_SESSION['user_id']}'";
     $meetingsresult = mysqli_query($myconnection, $meetingsquery)
     or die ('Query failed: ' . mysqli_error($myconnection));
-    // while ($meetings = mysqli_fetch_array($meetingsresult, MYSQLI_ASSOC)) {    
+    // while ($meetings = mysqli_fetch_array($meetingsresult, MYSQLI_ASSOC)) {
     //     echo($meetings["meet_id"]."<br>");
     // }
     $meetinginfoquery = "SELECT * from meetings WHERE meet_id IN (".$meetingsquery.")";
     $meetinginforesult = mysqli_query($myconnection, $meetinginfoquery)
     or die ('Query failed: ' . mysqli_error($myconnection));
-    // while ($meetinginfo = mysqli_fetch_array($meetinginforesult, MYSQLI_ASSOC)) {    
+    // while ($meetinginfo = mysqli_fetch_array($meetinginforesult, MYSQLI_ASSOC)) {
     //     echo($meetinginfo["meet_name"]."<br>");
     // }
     $meetinginfowithtimequery = "SELECT * from meetings, time_slot WHERE ".
     "meetings.time_slot_id = time_slot.time_slot_id";
     $meetinginfowithtimeresult = mysqli_query($myconnection, $meetinginfowithtimequery)
     or die ('Query failed: ' . mysqli_error($myconnection));
-    while ($meetinginfowithtime = mysqli_fetch_array($meetinginfowithtimeresult, MYSQLI_ASSOC)) {    
+    while ($meetinginfowithtime = mysqli_fetch_array($meetinginfowithtimeresult, MYSQLI_ASSOC)) {
         // enrolled mentee query
         $enrolledmenteequery = "SELECT count(mentee_id) as count from enroll WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
         $enrolledmenteeresult = mysqli_query($myconnection, $enrolledmenteequery)
@@ -96,7 +96,7 @@ else {
         while ($row = mysqli_fetch_array($enrolledmenteeidresult, MYSQLI_ASSOC)) {
             $menteearray[] =  $row['mentee_id'];
         }
-        
+
         // var_dump($menteearray);
         // echo "<br>";
 
@@ -111,8 +111,8 @@ else {
         echo("<tr>");
         echo("<td>".$meetinginfowithtime['meet_name']."</td>");
         echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
+        echo("<td>".$meetinginfowithtime['start_date']."</td>");
+        echo("<td>".$meetinginfowithtime['end_date']."</td>");
         echo("<td>".$meetinginfowithtime['day_of_the_week']." ".
         date("g:i a", strtotime($meetinginfowithtime['start_time']))." - ".
         date("g:i a", strtotime($meetinginfowithtime['end_time']))."</td>");
