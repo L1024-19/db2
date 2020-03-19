@@ -41,7 +41,7 @@ if (isset($_SESSION['user_id'])) {
   </head>
 
   <body>
-    <p><a href="StudentDashboard.html">Student Dashboard </a>
+    <p><a href="StudentSetting.html">Student Setting</a>
       &emsp;
       <a href="Logout.php">Logout</a>
     </p>
