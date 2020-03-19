@@ -116,7 +116,7 @@ else {
         echo("<td>".$meetinginfowithtime['day_of_the_week']." ".
         date("g:i a", strtotime($meetinginfowithtime['start_time']))." - ".
         date("g:i a", strtotime($meetinginfowithtime['end_time']))."</td>");
-        echo("<td>".(9 - $enrolledmentee['count'] - $enrolledmentor['count'])."</td>");
+        echo("<td>".($meetinginfowithtime['capacity'] - $enrolledmentee['count'] - $enrolledmentor['count'])."</td>");
         echo("<td>".$enrolledmentee['count']."</td>");
         echo("<td>".$enrolledmentor['count']."</td>");
         if ($enrolledmentee['count'] < 6 && !(in_array($_SESSION['user_id'], $menteearray)) && !(in_array($_SESSION['user_id'], $mentorarray))) {
@@ -135,50 +135,7 @@ else {
     }
 
     ?>
-    <tr>
-      <td>Database II</td>
-      <td>201</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>T 11:00 AM - 12:15 PM</td>
-      <td>45</td>
-    </tr>
 
-    <tr>
-      <td>Algorithm</td>
-      <td>203</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>Th 12:30 PM - 13:45 PM</td>
-      <td>45</td>
-    </tr>
-
-    <tr>
-      <td>Artificial Intelligence</td>
-      <td>420</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>Th 15:30 PM - 16:45 PM</td>
-      <td>38</td>
-    </tr>
-
-    <tr>
-      <td>Machine Learning</td>
-      <td>422</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>W 15:30 PM - 16:45 PM</td>
-      <td>49</td>
-    </tr>
-
-    <tr>
-      <td>Computer Graphics I</td>
-      <td>427</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>W 18:30 PM - 21:20 PM</td>
-      <td>35</td>
-    </tr>
 
   </table>
 

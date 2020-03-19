@@ -18,7 +18,7 @@ else {
 
 <head>
   <meta charset="utf-8">
-  <title>Section List</title>
+  <title>Mentee's Section List</title>
 
   <style>
     table {
@@ -43,7 +43,7 @@ else {
 
 <body>
   <a href="StudentSetting.html">Student Setting</a>
-  <h2 style="color:#FF0000" ;>Section List</h2>
+  <h2 style="color:#FF0000" ;>Mentee's Section List</h2>
 
   <table style="width:100%">
     <tr>
@@ -103,6 +103,16 @@ else {
       or die ('Query failed: ' . mysqli_error($myconnection));
       $meetinginfowithgroup = mysqli_fetch_array($meetinginfowithgroupresult, MYSQLI_ASSOC);
 
+      $studentquery = "SELECT student_id from students WHERE student_id = '{$_SESSION['user_id']}'";
+      $studentresult = mysqli_query($myconnection, $studentquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $studentinfoquery = "SELECT * from students WHERE student_id IN (".$studentquery.")";
+      $studentinforesult = mysqli_query($myconnection, $studentinfoquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $studentinfo = mysqli_fetch_array($studentinforesult, MYSQLI_ASSOC);
+
+
+
         echo("<tr>");
         echo("<td>".$meetinginfowithtime['meet_name']."</td>");
         echo("<td>"."?"."</td>");
@@ -116,55 +126,17 @@ else {
         echo("<td>".$meetinginfowithgroup['mentee_grade_req']."</td>");
         echo("<td>".$enrolledmentee['count']."</td>");
         echo("<td>".$enrolledmentor['count']."</td>");
-        echo("<td>"."?"."</td>");
+
+        if ($enrolledmentor['count'] < 3 && !(in_array($_SESSION['user_id'], $mentorarray)) && ($studentinfo['grade']>= $meetinginfowithgroup['mentor_grade_req']) ) {
+            echo("<td>"."<a href='Teach.php?key=".$meetinginfowithtime['meet_id']."'>Teach</a>"."</td>");
+        }
+        else {
+            echo("<td>"."N/A"."</td>");
+        }
         echo("<td>"."<a href='Materials.php?key=".$meetinginfowithtime['meet_id']."'>View</a>"."</td>");
         echo("</tr>");
     }
     ?>
-    <tr>
-      <td>Database II</td>
-      <td>201</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>T 11:00 AM - 12:15 PM</td>
-      <td>45</td>
-      <td>8</td>
-      <td>7</td>
-      <td>2</td>
-      <td>2</td>
-      <td><input type="button" value="Teach"></td>
-      <td><input type="button" value="Enroll"></td>
-    </tr>
-
-    <tr>
-      <td>Algorithm</td>
-      <td>203</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>Th 12:30 PM - 13:45 PM</td>
-      <td>45</td>
-      <td>8</td>
-      <td>7</td>
-      <td>2</td>
-      <td>2</td>
-      <td><input type="button" value="Teach"></td>
-      <td><input type="button" value="Enroll"></td>
-    </tr>
-
-    <tr>
-      <td>Artificial Intelligence</td>
-      <td>420</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>Th 15:30 PM - 16:45 PM</td>
-      <td>38</td>
-      <td>8</td>
-      <td>7</td>
-      <td>2</td>
-      <td>2</td>
-      <td><input type="button" value="Teach"></td>
-      <td><input type="button" value="Enroll"></td>
-    </tr>
 
 
   </table>
