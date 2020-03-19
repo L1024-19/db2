@@ -18,7 +18,7 @@ else {
 
 <head>
   <meta charset="utf-8">
-  <title>Section List</title>
+  <title>Mentor's Section List</title>
 
   <style>
     table {
@@ -43,7 +43,7 @@ else {
 
 <body>
   <a href="StudentSetting.html">Student Setting</a>
-  <h2 style="color:#FF0000" ;>Section List</h2>
+  <h2 style="color:#FF0000" ;>Mentor's Section List</h2>
 
   <table style="width:100%">
     <tr>
