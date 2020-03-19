@@ -15,6 +15,7 @@ else {
 ?>
 
 <div>
+    <a href='AdminAddMentees.php'>Add Mentees</a><br>
     <a href='AdminAddMentors.php'>Add Mentors</a><br>
     <a href='AdminAddMaterials.php'>Add Materials</a><br>
     <a href='Logout.php'>Logout</a>
