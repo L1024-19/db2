@@ -58,7 +58,6 @@ else {
       <th>Enrolled Mentor</th>
       <th>Enrolled Mentee</th>
       <th>Teach as Mentor</th>
-      <th>Enroll as Mentee</th>
       <th>Materials</th>
     </tr>
     <?php
@@ -69,7 +68,41 @@ else {
     "meetings.time_slot_id = time_slot.time_slot_id AND meet_id IN (".$meetingsquery.")";
     $meetinginfowithtimeresult = mysqli_query($myconnection, $meetinginfowithtimequery)
     or die ('Query failed: ' . mysqli_error($myconnection));
+
     while ($meetinginfowithtime = mysqli_fetch_array($meetinginfowithtimeresult, MYSQLI_ASSOC)) {
+      // enrolled mentee query
+      $enrolledmenteequery = "SELECT count(mentee_id) as count from enroll WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+      $enrolledmenteeresult = mysqli_query($myconnection, $enrolledmenteequery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $enrolledmentee = mysqli_fetch_array($enrolledmenteeresult, MYSQLI_ASSOC);
+      // enrolled mentor query
+      $enrolledmentorquery = "SELECT count(mentor_id) as count from enroll2 WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+      $enrolledmentorresult = mysqli_query($myconnection, $enrolledmentorquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $enrolledmentor = mysqli_fetch_array($enrolledmentorresult, MYSQLI_ASSOC);
+      // enrolled mentee id query
+      $enrolledmenteeidquery = "SELECT mentee_id from enroll WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+      $enrolledmenteeidresult = mysqli_query($myconnection, $enrolledmenteeidquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $menteearray = array();
+      while ($row = mysqli_fetch_array($enrolledmenteeidresult, MYSQLI_ASSOC)) {
+          $menteearray[] =  $row['mentee_id'];
+      }
+
+      $enrolledmentoridquery = "SELECT mentor_id from enroll2 WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+      $enrolledmentoridresult = mysqli_query($myconnection, $enrolledmentoridquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $mentorarray = array();
+      while ($row = mysqli_fetch_array($enrolledmentoridresult, MYSQLI_ASSOC)) {
+          $mentorarray[] =  $row['mentor_id'];
+      }
+
+      $meetinginfowithgroupquery = "SELECT * from meetings, groups WHERE ".
+      "meetings.group_id = groups.group_id AND meet_id IN (".$meetingsquery.")";
+      $meetinginfowithgroupresult = mysqli_query($myconnection, $meetinginfowithgroupquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $meetinginfowithgroup = mysqli_fetch_array($meetinginfowithgroupresult, MYSQLI_ASSOC);
+
         echo("<tr>");
         echo("<td>".$meetinginfowithtime['meet_name']."</td>");
         echo("<td>"."?"."</td>");
@@ -79,11 +112,10 @@ else {
         date("g:i a", strtotime($meetinginfowithtime['start_time']))." - ".
         date("g:i a", strtotime($meetinginfowithtime['end_time']))."</td>");
         echo("<td>".$meetinginfowithtime['capacity']."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
+        echo("<td>".$meetinginfowithgroup['mentor_grade_req']."</td>");
+        echo("<td>".$meetinginfowithgroup['mentee_grade_req']."</td>");
+        echo("<td>".$enrolledmentee['count']."</td>");
+        echo("<td>".$enrolledmentor['count']."</td>");
         echo("<td>"."?"."</td>");
         echo("<td>"."<a href='Materials.php?key=".$meetinginfowithtime['meet_id']."'>View</a>"."</td>");
         echo("</tr>");
