@@ -59,25 +59,25 @@ else {
       <th>Teach as Mentor</th>
     </tr>
     <?php
-    $myconnection = mysqli_connect('localhost', 'root', '', 'db2') 
+    $myconnection = mysqli_connect('localhost', 'root', '', 'db2')
     or die ('Could not connect: ' . mysqli_error($myconnection));
     $meetingsquery = "SELECT meet_id from enroll WHERE mentee_id = '{$_SESSION['user_id']}'";
     $meetingsresult = mysqli_query($myconnection, $meetingsquery)
     or die ('Query failed: ' . mysqli_error($myconnection));
-    // while ($meetings = mysqli_fetch_array($meetingsresult, MYSQLI_ASSOC)) {    
+    // while ($meetings = mysqli_fetch_array($meetingsresult, MYSQLI_ASSOC)) {
     //     echo($meetings["meet_id"]."<br>");
     // }
     $meetinginfoquery = "SELECT * from meetings WHERE meet_id IN (".$meetingsquery.")";
     $meetinginforesult = mysqli_query($myconnection, $meetinginfoquery)
     or die ('Query failed: ' . mysqli_error($myconnection));
-    // while ($meetinginfo = mysqli_fetch_array($meetinginforesult, MYSQLI_ASSOC)) {    
+    // while ($meetinginfo = mysqli_fetch_array($meetinginforesult, MYSQLI_ASSOC)) {
     //     echo($meetinginfo["meet_name"]."<br>");
     // }
     $meetinginfowithtimequery = "SELECT * from meetings, time_slot WHERE ".
     "meetings.time_slot_id = time_slot.time_slot_id";
     $meetinginfowithtimeresult = mysqli_query($myconnection, $meetinginfowithtimequery)
     or die ('Query failed: ' . mysqli_error($myconnection));
-    while ($meetinginfowithtime = mysqli_fetch_array($meetinginfowithtimeresult, MYSQLI_ASSOC)) {    
+    while ($meetinginfowithtime = mysqli_fetch_array($meetinginfowithtimeresult, MYSQLI_ASSOC)) {
         // enrolled mentee query
         $enrolledmenteequery = "SELECT count(mentee_id) as count from enroll WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
         $enrolledmenteeresult = mysqli_query($myconnection, $enrolledmenteequery)
@@ -96,7 +96,7 @@ else {
         while ($row = mysqli_fetch_array($enrolledmenteeidresult, MYSQLI_ASSOC)) {
             $menteearray[] =  $row['mentee_id'];
         }
-        
+
         // var_dump($menteearray);
         // echo "<br>";
 
@@ -111,12 +111,12 @@ else {
         echo("<tr>");
         echo("<td>".$meetinginfowithtime['meet_name']."</td>");
         echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
+        echo("<td>".$meetinginfowithtime['start_date']."</td>");
+        echo("<td>".$meetinginfowithtime['end_date']."</td>");
         echo("<td>".$meetinginfowithtime['day_of_the_week']." ".
         date("g:i a", strtotime($meetinginfowithtime['start_time']))." - ".
         date("g:i a", strtotime($meetinginfowithtime['end_time']))."</td>");
-        echo("<td>".(9 - $enrolledmentee['count'] - $enrolledmentor['count'])."</td>");
+        echo("<td>".($meetinginfowithtime['capacity'] - $enrolledmentee['count'] - $enrolledmentor['count'])."</td>");
         echo("<td>".$enrolledmentee['count']."</td>");
         echo("<td>".$enrolledmentor['count']."</td>");
         if ($enrolledmentee['count'] < 6 && !(in_array($_SESSION['user_id'], $menteearray)) && !(in_array($_SESSION['user_id'], $mentorarray))) {
@@ -135,50 +135,7 @@ else {
     }
 
     ?>
-    <tr>
-      <td>Database II</td>
-      <td>201</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>T 11:00 AM - 12:15 PM</td>
-      <td>45</td>
-    </tr>
 
-    <tr>
-      <td>Algorithm</td>
-      <td>203</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>Th 12:30 PM - 13:45 PM</td>
-      <td>45</td>
-    </tr>
-
-    <tr>
-      <td>Artificial Intelligence</td>
-      <td>420</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>Th 15:30 PM - 16:45 PM</td>
-      <td>38</td>
-    </tr>
-
-    <tr>
-      <td>Machine Learning</td>
-      <td>422</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>W 15:30 PM - 16:45 PM</td>
-      <td>49</td>
-    </tr>
-
-    <tr>
-      <td>Computer Graphics I</td>
-      <td>427</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>W 18:30 PM - 21:20 PM</td>
-      <td>35</td>
-    </tr>
 
   </table>
 

@@ -18,7 +18,7 @@ else {
 
 <head>
   <meta charset="utf-8">
-  <title>Section List</title>
+  <title>Mentee's Section List</title>
 
   <style>
     table {
@@ -43,12 +43,11 @@ else {
 
 <body>
   <a href="StudentSetting.html">Student Setting</a>
-  <h2 style="color:#FF0000" ;>Section List</h2>
+  <h2 style="color:#FF0000" ;>Mentee's Section List</h2>
 
   <table style="width:100%">
     <tr>
       <th>Course Title</th>
-      <th>Section Name</th>
       <th>Start Date</th>
       <th>End Date</th>
       <th>Time Slot</th>
@@ -58,7 +57,6 @@ else {
       <th>Enrolled Mentor</th>
       <th>Enrolled Mentee</th>
       <th>Teach as Mentor</th>
-      <th>Enroll as Mentee</th>
       <th>Materials</th>
     </tr>
     <?php
@@ -69,70 +67,74 @@ else {
     "meetings.time_slot_id = time_slot.time_slot_id AND meet_id IN (".$meetingsquery.")";
     $meetinginfowithtimeresult = mysqli_query($myconnection, $meetinginfowithtimequery)
     or die ('Query failed: ' . mysqli_error($myconnection));
+
     while ($meetinginfowithtime = mysqli_fetch_array($meetinginfowithtimeresult, MYSQLI_ASSOC)) {
+      // enrolled mentee query
+      $enrolledmenteequery = "SELECT count(mentee_id) as count from enroll WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+      $enrolledmenteeresult = mysqli_query($myconnection, $enrolledmenteequery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $enrolledmentee = mysqli_fetch_array($enrolledmenteeresult, MYSQLI_ASSOC);
+      // enrolled mentor query
+      $enrolledmentorquery = "SELECT count(mentor_id) as count from enroll2 WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+      $enrolledmentorresult = mysqli_query($myconnection, $enrolledmentorquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $enrolledmentor = mysqli_fetch_array($enrolledmentorresult, MYSQLI_ASSOC);
+      // enrolled mentee id query
+      $enrolledmenteeidquery = "SELECT mentee_id from enroll WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+      $enrolledmenteeidresult = mysqli_query($myconnection, $enrolledmenteeidquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $menteearray = array();
+      while ($row = mysqli_fetch_array($enrolledmenteeidresult, MYSQLI_ASSOC)) {
+          $menteearray[] =  $row['mentee_id'];
+      }
+
+      $enrolledmentoridquery = "SELECT mentor_id from enroll2 WHERE meet_id = '{$meetinginfowithtime['meet_id']}'";
+      $enrolledmentoridresult = mysqli_query($myconnection, $enrolledmentoridquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $mentorarray = array();
+      while ($row = mysqli_fetch_array($enrolledmentoridresult, MYSQLI_ASSOC)) {
+          $mentorarray[] =  $row['mentor_id'];
+      }
+
+      $meetinginfowithgroupquery = "SELECT * from meetings, groups WHERE ".
+      "meetings.group_id = groups.group_id AND meet_id IN (".$meetingsquery.")";
+      $meetinginfowithgroupresult = mysqli_query($myconnection, $meetinginfowithgroupquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $meetinginfowithgroup = mysqli_fetch_array($meetinginfowithgroupresult, MYSQLI_ASSOC);
+
+      $studentquery = "SELECT student_id from students WHERE student_id = '{$_SESSION['user_id']}'";
+      $studentresult = mysqli_query($myconnection, $studentquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $studentinfoquery = "SELECT * from students WHERE student_id IN (".$studentquery.")";
+      $studentinforesult = mysqli_query($myconnection, $studentinfoquery)
+      or die ('Query failed: ' . mysqli_error($myconnection));
+      $studentinfo = mysqli_fetch_array($studentinforesult, MYSQLI_ASSOC);
+
+
+
         echo("<tr>");
         echo("<td>".$meetinginfowithtime['meet_name']."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."1/1/2020"."</td>");
-        echo("<td>"."12/31/2020"."</td>");
+        echo("<td>".$meetinginfowithtime['start_date']."</td>");
+        echo("<td>".$meetinginfowithtime['end_date']."</td>");
         echo("<td>".$meetinginfowithtime['day_of_the_week']." ".
         date("g:i a", strtotime($meetinginfowithtime['start_time']))." - ".
         date("g:i a", strtotime($meetinginfowithtime['end_time']))."</td>");
         echo("<td>".$meetinginfowithtime['capacity']."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
-        echo("<td>"."?"."</td>");
+        echo("<td>".$meetinginfowithgroup['mentor_grade_req']."</td>");
+        echo("<td>".$meetinginfowithgroup['mentee_grade_req']."</td>");
+        echo("<td>".$enrolledmentee['count']."</td>");
+        echo("<td>".$enrolledmentor['count']."</td>");
+
+        if ($enrolledmentor['count'] < 3 && !(in_array($_SESSION['user_id'], $mentorarray)) && ($studentinfo['grade']>= $meetinginfowithgroup['mentor_grade_req']) ) {
+            echo("<td>"."<a href='Teach.php?key=".$meetinginfowithtime['meet_id']."'>Teach</a>"."</td>");
+        }
+        else {
+            echo("<td>"."N/A"."</td>");
+        }
         echo("<td>"."<a href='Materials.php?key=".$meetinginfowithtime['meet_id']."'>View</a>"."</td>");
         echo("</tr>");
     }
     ?>
-    <tr>
-      <td>Database II</td>
-      <td>201</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>T 11:00 AM - 12:15 PM</td>
-      <td>45</td>
-      <td>8</td>
-      <td>7</td>
-      <td>2</td>
-      <td>2</td>
-      <td><input type="button" value="Teach"></td>
-      <td><input type="button" value="Enroll"></td>
-    </tr>
-
-    <tr>
-      <td>Algorithm</td>
-      <td>203</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>Th 12:30 PM - 13:45 PM</td>
-      <td>45</td>
-      <td>8</td>
-      <td>7</td>
-      <td>2</td>
-      <td>2</td>
-      <td><input type="button" value="Teach"></td>
-      <td><input type="button" value="Enroll"></td>
-    </tr>
-
-    <tr>
-      <td>Artificial Intelligence</td>
-      <td>420</td>
-      <td>2020-01-21</td>
-      <td>2020-05-09</td>
-      <td>Th 15:30 PM - 16:45 PM</td>
-      <td>38</td>
-      <td>8</td>
-      <td>7</td>
-      <td>2</td>
-      <td>2</td>
-      <td><input type="button" value="Teach"></td>
-      <td><input type="button" value="Enroll"></td>
-    </tr>
 
 
   </table>
