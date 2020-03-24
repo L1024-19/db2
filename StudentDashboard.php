@@ -112,11 +112,18 @@ if (isset($_SESSION['user_id'])) {
           or die ('Query failed: ' . mysqli_error($myconnection));
           $enrolledmentee = mysqli_fetch_array($enrolledmenteeresult, MYSQLI_ASSOC);
 
+          $mentee_d = "SELECT day_of_the_week from meetings, time_slot WHERE
+            meetings.time_slot_id = time_slot.time_slot_id AND meet_id = '{$menteemeeting['meet_id']}'";
+          $d_result = mysqli_query($myconnection, $mentee_d) or die ('Query failed: ' . mysqli_error($myconnection));
+          $menteemeetingday = mysqli_fetch_array($d_result, MYSQLI_ASSOC);
+
+          $d1 = date("Y-m-d", strtotime("next $menteemeetingday[day_of_the_week]"));
+
           echo("<tr>");
           echo ("<td>Mentee</td>");
           echo("<td>".$menteemeeting['meet_name']."</td>");
           echo("<td>".$menteemeeting['meet_id']."</td>");
-          echo("<td>".$menteemeeting['start_date']."</td>");
+          echo("<td>".$d1."</td>");
           echo("<td>".$enrolledmentee['count']."</td>");
           if ($enrolledmentee['count'] > 1 ) {
             echo("<td><form method=\"POST\" action=''>");
@@ -175,11 +182,18 @@ if (isset($_SESSION['user_id'])) {
           or die ('Query failed: ' . mysqli_error($myconnection));
           $enrolledmentor = mysqli_fetch_array($enrolledmentorresult, MYSQLI_ASSOC);
 
+
+          $mentor_d = "SELECT day_of_the_week from meetings, time_slot WHERE
+            meetings.time_slot_id = time_slot.time_slot_id AND meet_id = '{$mentormeeting['meet_id']}'";
+          $d_result = mysqli_query($myconnection, $mentor_d) or die ('Query failed: ' . mysqli_error($myconnection));
+          $mentormeetingday = mysqli_fetch_array($d_result, MYSQLI_ASSOC);
+          $d2 = date("Y-m-d", strtotime("next $menteemeetingday[day_of_the_week]"));
+
           echo("<tr>");
           echo ("<td>Mentor</td>");
           echo("<td>".$mentormeeting['meet_name']."</td>");
           echo("<td>".$mentormeeting['meet_id']."</td>");
-          echo("<td>".$mentormeeting['start_date']."</td>");
+          echo("<td>".$d2."</td>");
           echo("<td>".$enrolledmentor['count']."</td>");
           if ($enrolledmentor['count'] > 1 ) {
             echo("<td><form method=\"POST\" action=''>");
