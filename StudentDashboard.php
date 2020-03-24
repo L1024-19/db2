@@ -118,7 +118,12 @@ if (isset($_SESSION['user_id'])) {
           echo("<td>".$menteemeeting['meet_id']."</td>");
           echo("<td>".$menteemeeting['start_date']."</td>");
           echo("<td>".$enrolledmentee['count']."</td>");
-
+          if ($enrolledmentee['count'] > 1 ) {
+              echo("<td><button onclick>"."<a href='QuitMentee.php'>Quit</a>"."</button></td>");
+          }
+          else {
+              echo("<td>"."N/A"."</td>");
+          }
           echo("</tr>");
 
         }
@@ -167,6 +172,12 @@ if (isset($_SESSION['user_id'])) {
           echo("<td>".$mentormeeting['meet_id']."</td>");
           echo("<td>".$mentormeeting['start_date']."</td>");
           echo("<td>".$enrolledmentor['count']."</td>");
+          if ($enrolledmentor['count'] > 1 ) {
+              echo("<td><button onclick>"."<a href='QuitMentor.php'>Quit</a>"."</button></td>");
+          }
+          else {
+              echo("<td>"."N/A"."</td>");
+          }
 
           echo("</tr>");
 
