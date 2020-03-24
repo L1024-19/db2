@@ -92,13 +92,12 @@ else {
         $studentmenteeresult = mysqli_query($myconnection, $studentmenteequery)
         or die ('Query failed: ' . mysqli_error($myconnection));
 
-        $studentmentorquery = "SELECT * from enroll2, students WHERE
-        student_id = '{$mentormeeting['mentor_id']}' AND "."students.student_id = enroll2.mentor_id";
+        $studentmentorquery = "SELECT distinct student_id, grade from enroll2, students WHERE
+        student_id = '{$mentormeeting['mentor_id']}' AND meet_id = '{$mentormeeting['meet_id']}'";
         $studentmentorresult = mysqli_query($myconnection, $studentmentorquery)
         or die ('Query failed: ' . mysqli_error($myconnection));
 
-        $mentoruserquery = "SELECT * from enroll2, users WHERE
-        id = '{$mentormeeting['mentor_id']}' AND "."users.id = enroll2.mentor_id";
+        $mentoruserquery = "SELECT * from enroll2, users WHERE id = '{$mentormeeting['mentor_id']}'";
         $mentoruserresult = mysqli_query($myconnection, $mentoruserquery)
         or die ('Query failed: ' . mysqli_error($myconnection));
         $mentoruser = mysqli_fetch_array($mentoruserresult, MYSQLI_ASSOC);
