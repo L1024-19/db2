@@ -83,27 +83,19 @@ else {
     }
     else {
       while($mentormeeting = mysqli_fetch_array($mentormeetingresult, MYSQLI_ASSOC)){
-        $studentmenteequery = "SELECT * from enroll, students WHERE ".
-        "students.student_id = enroll.mentee_id AND student_id IN (".$enrolledmenteeidquery.")";
-        $studentmenteeresult = mysqli_query($myconnection, $studentmenteequery)
-        or die ('Query failed: ' . mysqli_error($myconnection));
-        $studentmentee = mysqli_fetch_array($studentmenteeresult, MYSQLI_ASSOC);
-
         $menteesquery = "SELECT mentee_id from enroll WHERE meet_id = '{$mentormeeting['meet_id']}'";
         $menteesresult = mysqli_query($myconnection, $menteesquery)
         or die ('Query failed: ' . mysqli_error($myconnection));
-
 
         $mentorsquery = "SELECT mentor_id from enroll2 WHERE meet_id = '{$mentormeeting['meet_id']}'";
         $mentorsresult = mysqli_query($myconnection, $mentorsquery)
         or die ('Query failed: ' . mysqli_error($myconnection));
 
-
-        $studentmentorquery = "SELECT distinct grade from enroll2, students WHERE
-        student_id = '{$mentormeeting['mentor_id']}' AND meet_id = '{$mentormeeting['meet_id']}'";
-        $studentmentorresult = mysqli_query($myconnection, $studentmentorquery)
+        $studentmenteequery = "SELECT * from enroll, students WHERE ".
+        "students.student_id = enroll.mentee_id AND student_id IN (".$enrolledmenteeidquery.")";
+        $studentmenteeresult = mysqli_query($myconnection, $studentmenteequery)
         or die ('Query failed: ' . mysqli_error($myconnection));
-        $studentmentor = mysqli_fetch_array($studentmentorresult, MYSQLI_ASSOC);
+        $studentmentee = mysqli_fetch_array($studentmenteeresult, MYSQLI_ASSOC);
 
 
 
@@ -140,6 +132,12 @@ else {
           $mentoruserresult = mysqli_query($myconnection, $mentoruserquery)
           or die ('Query failed: ' . mysqli_error($myconnection));
           $mentoruser = mysqli_fetch_array($mentoruserresult, MYSQLI_ASSOC);
+
+          $studentmentorquery = "SELECT distinct grade from enroll2, students WHERE
+          student_id = '{$mentors['mentor_id']}' AND meet_id = '{$mentormeeting['meet_id']}'";
+          $studentmentorresult = mysqli_query($myconnection, $studentmentorquery)
+          or die ('Query failed: ' . mysqli_error($myconnection));
+          $studentmentor = mysqli_fetch_array($studentmentorresult, MYSQLI_ASSOC);
 
           echo("<tr>");
           echo("<td>".$mentoruser['name']."</td>");
