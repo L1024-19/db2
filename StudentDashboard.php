@@ -49,7 +49,7 @@ if (isset($_SESSION['user_id'])) {
 
     <h1>Student Information</h1>
 
-    <table style="width:100%">
+    <table style="width:80%">
       <tr>
         <th colspan="2">User Type</th>
         <th>Action</th>
@@ -79,9 +79,8 @@ if (isset($_SESSION['user_id'])) {
     <br>
 
 
-    <h2 style="color:#FF0000" ;>Mentor Notification For Next Week</h2>
-    <form action="MentorNotification.php" method="post">
-      <table style="width:100%">
+    <h2 style="color:#FF0000" ;>Mentee Notification For Next Week</h2>
+      <table style="width:80%">
         <tr>
           <th>Role</th>
           <th>Course Name</th>
@@ -128,35 +127,53 @@ if (isset($_SESSION['user_id'])) {
     </form>
     <br>
 
-    <h2 style="color:#FF0000" ;>Mentee Notification For Next Week</h2>
-    <form action="MenteeNotification.php" method="post">
-      <table style="width:100%">
+    <h2 style="color:#FF0000" ;>Mentor Notification For Next Week</h2>
+
+      <table style="width:80%">
         <tr>
           <th>Role</th>
           <th>Course Name</th>
-          <th>Section Name</th>
-          <th>Session Name</th>
+          <th>Session Number</th>
           <th>Session Date</th>
-          <th>Participate Mentee Count</th>
+          <th>Participate Mentor Count</th>
           <th>Participate/Cancel</th>
         </tr>
-        <tr>
-          <td name="MenteeRole"></td>
-          <td name="MenteeCName"></td>
-          <td name="MenteeStName"></td>
-          <td name="MenteeSsName"></td>
-          <td name="MenteeSDate"></td>
-          <td name="MenteeCount"></td>
-          <td>
-              <select name="MentorParticipation">
-                  <option value="MenteeParticipate" selected>Participate</option>
-                  <option value="MenteeDecline">Decline</option>
-              </select>
-              <input type="submit" value="Submit"/>
-          </td>
-        </tr>
+
+        <?php
+        $myconnection = mysqli_connect('localhost', 'root', '', 'db2')
+        or die ('Could not connect: ' . mysqli_error($myconnection));
+
+        $mentorquery = "SELECT * from enroll2 WHERE mentor_id = '{$_SESSION['user_id']}'";
+        $mentorresult = mysqli_query($myconnection, $mentorquery)
+        or die ('Query failed: ' . mysqli_error($myconnection));
+        $mentor = mysqli_fetch_array($mentorresult, MYSQLI_ASSOC);
+
+        $mentormeetingquery = "SELECT * from meetings JOIN enroll2 ON (".
+        "meetings.meet_id = enroll2.meet_id) WHERE mentor_id = '{$_SESSION['user_id']}'";
+        $mentormeetingresult = mysqli_query($myconnection, $mentormeetingquery)
+        or die ('Query failed: ' . mysqli_error($myconnection));
+
+
+        while ($mentormeeting = mysqli_fetch_array($mentormeetingresult, MYSQLI_ASSOC)) {
+          // enrolled mentor query
+          $enrolledmentorquery = "SELECT count(mentor_id) as count from enroll2 WHERE meet_id = '{$mentormeeting['meet_id']}'";
+          $enrolledmentorresult = mysqli_query($myconnection, $enrolledmentorquery)
+          or die ('Query failed: ' . mysqli_error($myconnection));
+          $enrolledmentor = mysqli_fetch_array($enrolledmentorresult, MYSQLI_ASSOC);
+
+          echo("<tr>");
+          echo ("<td>Mentor</td>");
+          echo("<td>".$mentormeeting['meet_name']."</td>");
+          echo("<td>".$mentormeeting['meet_id']."</td>");
+          echo("<td>".$mentormeeting['start_date']."</td>");
+          echo("<td>".$enrolledmentor['count']."</td>");
+
+          echo("</tr>");
+
+        }
+        ?>
+
       </table>
-    </form>
 
   </body>
 
