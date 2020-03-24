@@ -44,7 +44,7 @@ else {
 <body>
   <a href="StudentSetting.html">Student Setting</a>
   <h2 style="color:#FF0000" ;>Mentor's Section List</h2>
-  <table style="width:100%">
+
 
 
     <?php
@@ -57,6 +57,11 @@ else {
     $mentorresult = mysqli_query($myconnection, $mentorquery)
     or die ('Query failed: ' . mysqli_error($myconnection));
     $mentor = mysqli_fetch_array($mentorresult, MYSQLI_ASSOC);
+
+    $mentormeetingquery = "SELECT * from meetings INNER JOIN enroll2 ON (".
+    "meetings.meet_id = enroll2.meet_id) WHERE mentor_id = '{$_SESSION['user_id']}'";
+    $mentormeetingresult = mysqli_query($myconnection, $mentormeetingquery)
+    or die ('Query failed: ' . mysqli_error($myconnection));
 
 
     $enrolledmenteeidquery = "SELECT mentee_id from enroll WHERE meet_id = '{$mentor['meet_id']}'";
@@ -76,51 +81,56 @@ else {
     }
 
 
-    $studentmenteequery = "SELECT * from enroll, students WHERE ".
-    "students.student_id = enroll.mentee_id AND student_id IN (".$enrolledmenteeidquery.")";
-    $studentmenteeresult = mysqli_query($myconnection, $studentmenteequery)
-    or die ('Query failed: ' . mysqli_error($myconnection));
-
-    $studentmentorquery = "SELECT * from enroll2, students WHERE ".
-    "students.student_id = enroll2.mentor_id AND student_id IN (".$enrolledmentoridquery.")";
-    $studentmentorresult = mysqli_query($myconnection, $studentmentorquery)
-    or die ('Query failed: ' . mysqli_error($myconnection));
-
 
     if ( !(in_array($_SESSION['user_id'], $mentorarray))) {
       echo "<p>Sorry did not find any section</p>";
     }
     else {
-      echo("<h2>".$mentor['meet_id']."</h2>");
+      while($mentormeeting = mysqli_fetch_array($mentormeetingresult, MYSQLI_ASSOC)){
+        $studentmenteequery = "SELECT * from enroll, students WHERE ".
+        "students.student_id = enroll.mentee_id AND student_id IN (".$enrolledmenteeidquery.")";
+        $studentmenteeresult = mysqli_query($myconnection, $studentmenteequery)
+        or die ('Query failed: ' . mysqli_error($myconnection));
 
-      echo("<tr>");
-      echo("<th>Student Name</th>");
-      echo("<th>Student Name</th>");
-      echo("<th>Student Name</th>");
-      echo("</tr>");
+        $studentmentorquery = "SELECT * from enroll2, students WHERE ".
+        "students.student_id = enroll2.mentor_id AND student_id IN (".$enrolledmentoridquery.")";
+        $studentmentorresult = mysqli_query($myconnection, $studentmentorquery)
+        or die ('Query failed: ' . mysqli_error($myconnection));
 
-      echo("<tr>");
-      echo("<th colspan=\"3\" style=\"text-align:center;\">Mentees</th>");
-      echo("</tr>");
-      while ($studentmentee = mysqli_fetch_array($studentmenteeresult, MYSQLI_ASSOC)) {
-        echo("<tr>");
-        echo("<td>".$studentmentee['student_id']."</td>");
-        echo("<td>".$studentmentee['grade']."</td>");
-        echo("<td>Mentee</td>");
+
+        echo ("<table style=\"width:50%\">");
+        echo ("<tr><th colspan=\"3\" height=\"40\" style=\"text-align:center;\">"
+        .$mentormeeting['meet_name']."</h2></tr>");
+        echo("<th>Student Name</th>");
+        echo("<th>Student Grade</th>");
+        echo("<th>Student Role</th>");
         echo("</tr>");
-      }
 
-      echo("<tr>");
-      echo("<th colspan=\"3\" style=\"text-align:center;\">Mentors</th>");
-      echo("</tr>");
-      while ($studentmentor = mysqli_fetch_array($studentmentorresult, MYSQLI_ASSOC)) {
         echo("<tr>");
-        echo("<td>".$studentmentor['student_id']."</td>");
-        echo("<td>".$studentmentor['grade']."</td>");
-        echo("<td>Mentor</td>");
+        echo("<th colspan=\"3\" height=\"25\" style=\"text-align:center;\">Mentees</th>");
         echo("</tr>");
-      }
+        while ($studentmentee = mysqli_fetch_array($studentmenteeresult, MYSQLI_ASSOC)) {
+          echo("<tr>");
+          echo("<td>".$studentmentee['student_id']."</td>");
+          echo("<td>".$studentmentee['grade']."</td>");
+          echo("<td>Mentee</td>");
+          echo("</tr>");
+        }
 
+        echo("<tr>");
+        echo("<th colspan=\"3\" height=\"25\" style=\"text-align:center;\">Mentors</th>");
+        echo("</tr>");
+        while ($studentmentor = mysqli_fetch_array($studentmentorresult, MYSQLI_ASSOC)) {
+          echo("<tr>");
+          echo("<td>".$studentmentor['student_id']."</td>");
+          echo("<td>".$studentmentor['grade']."</td>");
+          echo("<td>Mentor</td>");
+          echo("</tr>");
+        }
+        echo ("</table>");
+        echo ("<br><br><br>");
+
+      }
     }
 
     ?>
