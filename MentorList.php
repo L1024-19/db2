@@ -87,6 +87,11 @@ else {
         "students.student_id = enroll.mentee_id AND student_id IN (".$enrolledmenteeidquery.")";
         $studentmenteeresult = mysqli_query($myconnection, $studentmenteequery)
         or die ('Query failed: ' . mysqli_error($myconnection));
+        $studentmentee = mysqli_fetch_array($studentmenteeresult, MYSQLI_ASSOC);
+
+        $menteesquery = "SELECT mentee_id from enroll WHERE meet_id = '{$mentormeeting['meet_id']}'";
+        $menteesresult = mysqli_query($myconnection, $menteesquery)
+        or die ('Query failed: ' . mysqli_error($myconnection));
 
 
         $mentorsquery = "SELECT mentor_id from enroll2 WHERE meet_id = '{$mentormeeting['meet_id']}'";
@@ -114,9 +119,14 @@ else {
         echo("<tr>");
         echo("<th colspan=\"3\" height=\"25\" style=\"text-align:center;\">Mentees</th>");
         echo("</tr>");
-        while ($studentmentee = mysqli_fetch_array($studentmenteeresult, MYSQLI_ASSOC)) {
+        while ($mentees = mysqli_fetch_array($menteesresult, MYSQLI_ASSOC)) {
+          $menteeuserquery = "SELECT * from enroll, users WHERE id = '{$mentees['mentee_id']}'";
+          $menteeuserresult = mysqli_query($myconnection, $menteeuserquery)
+          or die ('Query failed: ' . mysqli_error($myconnection));
+          $menteeuser = mysqli_fetch_array($menteeuserresult, MYSQLI_ASSOC);
+
           echo("<tr>");
-          echo("<td>".$studentmentee['student_id']."</td>");
+          echo("<td>".$menteeuser['name']."</td>");
           echo("<td>".$studentmentee['grade']."</td>");
           echo("<td>Mentee</td>");
           echo("</tr>");
