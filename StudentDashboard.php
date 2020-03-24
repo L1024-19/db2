@@ -119,7 +119,16 @@ if (isset($_SESSION['user_id'])) {
           echo("<td>".$menteemeeting['start_date']."</td>");
           echo("<td>".$enrolledmentee['count']."</td>");
           if ($enrolledmentee['count'] > 1 ) {
-              echo("<td><button onclick>"."<a href='QuitMentee.php'>Quit</a>"."</button></td>");
+            echo("<td><form method=\"POST\" action=''>");
+            echo("<input type=\"submit\" name=\"MenteeQuit\" value=\"Quit\"></form></td>");
+            if (isset($_POST['MenteeQuit'])){
+              $deletementee = "DELETE FROM enroll WHERE mentee_id = '{$_SESSION['user_id']}'
+                                              AND meet_id = '{$menteemeeting['meet_id']}'";
+              mysqli_query($myconnection, $deletementee);
+              mysqli_close($myconnection);
+              header('Location: StudentDashboard.php');
+            }
+
           }
           else {
               echo("<td>"."N/A"."</td>");
@@ -173,7 +182,16 @@ if (isset($_SESSION['user_id'])) {
           echo("<td>".$mentormeeting['start_date']."</td>");
           echo("<td>".$enrolledmentor['count']."</td>");
           if ($enrolledmentor['count'] > 1 ) {
-              echo("<td><button onclick>"."<a href='QuitMentor.php'>Quit</a>"."</button></td>");
+            echo("<td><form method=\"POST\" action=''>");
+            echo("<input type=\"submit\" name=\"MentorQuit\" value=\"Quit\"></form></td>");
+            if (isset($_POST['MentorQuit'])){
+              $deletementor = "DELETE FROM enroll2 WHERE mentor_id = '{$_SESSION['user_id']}'
+                                              AND meet_id = '{$mentormeeting['meet_id']}'";
+              mysqli_query($myconnection, $deletementor);
+              mysqli_close($myconnection);
+              header('Location: StudentDashboard.php');
+            }
+
           }
           else {
               echo("<td>"."N/A"."</td>");
