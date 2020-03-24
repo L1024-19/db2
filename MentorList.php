@@ -45,20 +45,16 @@ else {
   <a href="StudentSetting.html">Student Setting</a>
   <h2 style="color:#FF0000" ;>Mentor's Section List</h2>
 
-
-
     <?php
     $myconnection = mysqli_connect('localhost', 'root', '', 'db2')
     or die ('Could not connect: ' . mysqli_error($myconnection));
-
-
 
     $mentorquery = "SELECT * from enroll2 WHERE mentor_id = '{$_SESSION['user_id']}'";
     $mentorresult = mysqli_query($myconnection, $mentorquery)
     or die ('Query failed: ' . mysqli_error($myconnection));
     $mentor = mysqli_fetch_array($mentorresult, MYSQLI_ASSOC);
 
-    $mentormeetingquery = "SELECT * from meetings INNER JOIN enroll2 ON (".
+    $mentormeetingquery = "SELECT meet_name, mentor_id, enroll2.meet_id from meetings JOIN enroll2 ON (".
     "meetings.meet_id = enroll2.meet_id) WHERE mentor_id = '{$_SESSION['user_id']}'";
     $mentormeetingresult = mysqli_query($myconnection, $mentormeetingquery)
     or die ('Query failed: ' . mysqli_error($myconnection));
@@ -92,15 +88,19 @@ else {
         $studentmenteeresult = mysqli_query($myconnection, $studentmenteequery)
         or die ('Query failed: ' . mysqli_error($myconnection));
 
-        $studentmentorquery = "SELECT distinct student_id, grade from enroll2, students WHERE
+
+        $mentorsquery = "SELECT mentor_id from enroll2 WHERE meet_id = '{$mentormeeting['meet_id']}'";
+        $mentorsresult = mysqli_query($myconnection, $mentorsquery)
+        or die ('Query failed: ' . mysqli_error($myconnection));
+
+
+        $studentmentorquery = "SELECT distinct grade from enroll2, students WHERE
         student_id = '{$mentormeeting['mentor_id']}' AND meet_id = '{$mentormeeting['meet_id']}'";
         $studentmentorresult = mysqli_query($myconnection, $studentmentorquery)
         or die ('Query failed: ' . mysqli_error($myconnection));
+        $studentmentor = mysqli_fetch_array($studentmentorresult, MYSQLI_ASSOC);
 
-        $mentoruserquery = "SELECT * from enroll2, users WHERE id = '{$mentormeeting['mentor_id']}'";
-        $mentoruserresult = mysqli_query($myconnection, $mentoruserquery)
-        or die ('Query failed: ' . mysqli_error($myconnection));
-        $mentoruser = mysqli_fetch_array($mentoruserresult, MYSQLI_ASSOC);
+
 
 
         echo ("<table style=\"width:50%\">");
@@ -125,7 +125,12 @@ else {
         echo("<tr>");
         echo("<th colspan=\"3\" height=\"25\" style=\"text-align:center;\">Mentors</th>");
         echo("</tr>");
-        while ($studentmentor = mysqli_fetch_array($studentmentorresult, MYSQLI_ASSOC)) {
+        while ($mentors = mysqli_fetch_array($mentorsresult, MYSQLI_ASSOC)) {
+          $mentoruserquery = "SELECT * from enroll2, users WHERE id = '{$mentors['mentor_id']}'";
+          $mentoruserresult = mysqli_query($myconnection, $mentoruserquery)
+          or die ('Query failed: ' . mysqli_error($myconnection));
+          $mentoruser = mysqli_fetch_array($mentoruserresult, MYSQLI_ASSOC);
+
           echo("<tr>");
           echo("<td>".$mentoruser['name']."</td>");
           echo("<td>".$studentmentor['grade']."</td>");
@@ -141,9 +146,5 @@ else {
     ?>
 
 
-
-
-
 </body>
-
 </html>
