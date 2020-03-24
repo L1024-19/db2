@@ -91,14 +91,6 @@ else {
         $mentorsresult = mysqli_query($myconnection, $mentorsquery)
         or die ('Query failed: ' . mysqli_error($myconnection));
 
-        $studentmenteequery = "SELECT * from enroll, students WHERE ".
-        "students.student_id = enroll.mentee_id AND student_id IN (".$enrolledmenteeidquery.")";
-        $studentmenteeresult = mysqli_query($myconnection, $studentmenteequery)
-        or die ('Query failed: ' . mysqli_error($myconnection));
-        $studentmentee = mysqli_fetch_array($studentmenteeresult, MYSQLI_ASSOC);
-
-
-
 
         echo ("<table style=\"width:50%\">");
         echo ("<tr><th colspan=\"3\" height=\"40\" style=\"text-align:center;\">"
@@ -117,6 +109,12 @@ else {
           or die ('Query failed: ' . mysqli_error($myconnection));
           $menteeuser = mysqli_fetch_array($menteeuserresult, MYSQLI_ASSOC);
 
+          $studentmenteequery = "SELECT * from enroll, students WHERE
+          student_id = '{$mentees['mentee_id']}' AND meet_id = '{$mentormeeting['meet_id']}'";
+          $studentmenteeresult = mysqli_query($myconnection, $studentmenteequery)
+          or die ('Query failed: ' . mysqli_error($myconnection));
+          $studentmentee = mysqli_fetch_array($studentmenteeresult, MYSQLI_ASSOC);
+
           echo("<tr>");
           echo("<td>".$menteeuser['name']."</td>");
           echo("<td>".$studentmentee['grade']."</td>");
@@ -133,7 +131,7 @@ else {
           or die ('Query failed: ' . mysqli_error($myconnection));
           $mentoruser = mysqli_fetch_array($mentoruserresult, MYSQLI_ASSOC);
 
-          $studentmentorquery = "SELECT distinct grade from enroll2, students WHERE
+          $studentmentorquery = "SELECT * from enroll2, students WHERE
           student_id = '{$mentors['mentor_id']}' AND meet_id = '{$mentormeeting['meet_id']}'";
           $studentmentorresult = mysqli_query($myconnection, $studentmentorquery)
           or die ('Query failed: ' . mysqli_error($myconnection));
